@@ -1,0 +1,36 @@
+import java.io.*;
+impot java.net.*;
+
+class clienthalfduplex{
+
+public static void main(String args[]{
+
+Socket s;
+String buff;
+
+try{
+
+s = new Socket("localhost",12345);
+
+BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
+BufferedReader b1 = new BufferedReader(new InputStreamReader(s.getInputStream()));
+PrintWriter pw = new PrintWriter(s.getOutputStream(),true);
+
+System.out.println("Enter message to send server : ");
+
+while(buff = b.readLine() != null){
+
+pw.println(buff);
+
+}
+
+pw.close();
+b.close();
+b1.close();
+s.close();
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}

@@ -1,0 +1,61 @@
+import java.io.*;
+import java.net.*;
+
+public class FTPServer {
+public static void main(String[] args) {
+try{
+
+ServerSocket s = new ServerSocket(12345);
+System.out.println("Server listning");
+
+while(true){
+Socket in = s.accept();
+System.out.println("Client connected");
+
+Thread clientThread = new Thread(new clientHandler(in));
+clientThread.start();
+}
+
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}
+
+public class clientHandler implements Runnable{
+
+private Socket clientSocket;
+
+public clientHandler(Socket clientSocket){
+this.clientSocket = clientSocket;
+}
+
+@override
+public void run(){
+
+try{
+DataInputStream dis= new DataInputStream(s.getInputStream());
+DataoutputStream dos= new DataInputStream(s.getoutputStream());
+
+String FileName = dis.readUTF();
+System.out.println("Client requestited file is"+FileName);
+
+File file = new File(FileName);
+if(file.exits()){
+
+dos.writeBoolean(true);
+System.out.println("File found");
+
+}else{
+
+dos.writeBoolean(false);
+System.out.println("File not found");
+
+}
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}

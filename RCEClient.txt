@@ -1,0 +1,40 @@
+import java.io.*;
+import java.net.*;
+
+class RCEClient{
+
+public static void main(String args[]{
+
+try {
+
+String ServerIp = "127.0.0.1";
+int serverPort = 9876;
+
+DatagramSocket s= new DatagramSocket();
+BufferedReader b = new BufferedReader(new InputStramReader(System.in));
+
+while(true){
+
+System.out.in("Enter the command(or exit)");
+String command = b.readLine();
+
+byte[] sendData = command.getBytes();
+InetAddress serverAddress = InetAddress.getByName(ServerIp);
+DatagramPacket sendPacket = new DatagramPacket(sendData,sendData.Length,serverAddress,serverPort);
+s.send(sendPacket);
+
+byte[] receiveData = new byte[1024];
+DatagramPacket receivePacket = new DatagramPacket(receiveData,receiveData.Length);
+s.receive(receivePacket);
+
+String result = new String(receivePacket.getData(),0,receivePacket.getLength());
+System.out.println("Server Response :"+result);
+
+}
+s.close();
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}

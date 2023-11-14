@@ -1,0 +1,53 @@
+import java.io.*;
+import java.net.*;
+
+class clienfullduplex{
+
+public static void main(String args[]{
+
+Socket s;
+
+try{
+
+s = new Socket("localhost",12345);
+
+BufferedReader b = new BufferedReader(new InputStreamReader(s.getInputStream()));
+PrintWriter pw = new PrintWriter(s.getOutStream(),true);
+
+System.out.println("Enter msg for server:");
+
+Thread inputThread = new Thread(() ->{
+
+try{
+while(true){
+
+String buff = b.readLine();
+
+if(buff == null){
+break;
+}
+
+System.out.print("Server Message : "+buff);
+
+}
+catch((IOException e){
+e.printStackTrace();
+}
+});
+
+inputThread.start();
+
+BufferedReader b1 = new BufferedReader(new InputStreamReader(System.in));
+while(true){
+String Buff = b1.readLine();
+if(Buff.equalIngnoreCase("exit"){
+break;
+}
+pw.println(Buff);
+}
+inputThread.join();
+s.close();
+}
+catch(IOException | InterrupException e){
+e.printStackTrace();
+}}}

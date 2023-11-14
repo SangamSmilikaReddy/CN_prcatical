@@ -1,0 +1,49 @@
+import java.net.UnknownHostException;
+import java.net.SocketException;
+import java.net.NetworkInterface;
+import java.net.InetAddress;
+
+public class ARP{
+
+public static void main(string args[]){
+
+System.out.print("Enter ip address:");
+String ip = System.console().readLine();
+
+try{
+
+InetAddress inetaddress = InetAddress.getByName(ip);
+NetworkInterface networkinterface = NetworkInterface.getByInetAddress(inetaddress);
+
+if(networkinterface == null){
+System.out.println("IP not in ARP cache");
+System.exit(0);
+}
+
+byte[] macaddress = networkinterface.getHardwareAddress();
+
+if(macaddress != null)
+
+System.out.println("Received ARP reply");
+System.out.print("MAC Address for'"+ip+"':");
+
+for(int i;i<macaddress.length;i++){
+
+System.out.printf("%02xs%",macaddress[i],(i<macaddress.length-1) ? ":":"");
+
+}
+System.out.println();
+}
+else{
+
+System.out.println("Unable to retreive MAC address");
+
+}
+catch(UnknownHostException e){
+System.out.println("IP address entered is invalid");
+}
+catch(SocketException e){
+e.printStackTrace();
+}
+}
+}

@@ -1,0 +1,39 @@
+import java.io.*;
+import java.net.*;
+import java.util.Scanner
+
+public class FTPClient {
+public static void main(String[] args) {
+
+try{
+
+Socket s = new Socket("localhost",12345);
+
+DataInputStream dis= new DataInputStream(s.getInputStream());
+DataoutputStream dos= new DataInputStream(s.getoutputStream());
+
+Scanner scanner = new Scanner(System.in);
+
+while(true){
+System.out.println("Enter file name :");
+String FileName = scanner.nextLine();
+
+dos.writeUTF(FileName);
+
+boolean fileexist = dis.readBoolean();
+if(fileexist){
+
+System.out.println("\nFile found");
+
+}else{
+
+System.out.println("\nFile not found");
+
+}
+}
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}

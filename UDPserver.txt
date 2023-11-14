@@ -1,0 +1,37 @@
+import java.io.*;
+impot java.net.*;
+
+class updserver{
+
+public static void main(String args[]{
+
+try{
+int serverport = 8888;
+DatagramSocket socket = new DatagramSocket(serverport);
+
+byte[] receiveData = new byte[1024];
+System.out.println("server listening"+serverport);
+
+while(True){
+
+DatagramPacket receivePacket = new DatagramPacket(receiveData,receiveData.Length);
+socket.receive(receiveData);
+
+String messageReceived = new String(receivePacket.getData(),0,receivePacket.getLength());
+System.out.println("receiveData : "+messageReceived);
+
+InetAddress clientAddress = receivePacket.getAddress();
+int clientport = receivePacket.getPort();
+byte[] sendData = messageReceived.getBytes();
+DatagramPacket sendPacket= new DatagramPacket(sendData,sendData.Length,clientAddress,clientport);
+
+socket.close();
+
+}
+
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}

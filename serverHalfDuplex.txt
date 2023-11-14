@@ -1,0 +1,37 @@
+import java.io.*;
+impot java.net.*;
+
+class serverhalfduplex{
+
+public static void main(String args[]{
+
+ServerSocket s;
+Socket in;
+String buff;
+
+try{
+
+s = new ServerSocket(12345);
+System.out.println("Listening......");
+in = s.accept();
+System.out.println("Connected");
+
+
+BufferedReader b = new BufferedReader(new InputStreamReader(in.getInputStream()));
+PrintWriter pw = new PrintWriter(in.getOutputStream,true);
+
+while(buff = b.readLine() != null){
+System.out.println("ClientMessage:"+buff);
+}
+
+pw.close();
+b.close();
+s.close();
+in.close();
+
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}

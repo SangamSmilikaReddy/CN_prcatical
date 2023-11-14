@@ -1,0 +1,23 @@
+import java.io.*;
+import java.net.*;
+
+class DateTimeClient{
+
+public static void main(String args[]{
+
+Socket s;
+
+try(
+s = new Socket("loacalhoat",12345);
+BufferedReader b = new BufferedReader(new InputStreamReader(s.getInputStream()));
+){
+
+String buff = b.readLines();
+System.out.println("Server datetime:"+buff);
+
+}
+catch(IOExceptions e){
+e.printStackTrace();
+}
+}
+}
